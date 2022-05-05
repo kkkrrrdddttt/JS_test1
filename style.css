@@ -1,0 +1,150 @@
+* {
+  margin: 0;
+  padding: 0
+}
+
+.tabs {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: silver;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.tab-headers {
+  background-color: silver;
+}
+
+.tab-h {
+  margin-top: 10px;
+  display: inline-block;
+  height: 30px;
+  width: 80px;
+  background-color: #cff4fc;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid white;
+  font-size: large;
+  font-style: inherit;
+  vertical-align: middle;
+  padding-top: 3px;
+  border-bottom: 1px solid #cff4fc;
+}
+
+.tab-content {
+  width: 100%;
+  position: relative;
+  top: -1px;
+  background-color: #cff4fc;
+  border-top: 1px solid white;
+}
+
+.list {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
+.underLine{
+  border-bottom: 1px dotted rgb(98, 127, 224);
+  width: 100%;
+  display: block;
+}
+.head {
+  padding-left: 10px;
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background-color: #cff4fc;
+  font-size: large;
+  font-style: inherit;
+  vertical-align: middle;
+  padding-top: 3px;
+}
+
+.form-check {
+  margin-left: 40px;
+}
+
+ol {
+  padding: 0;
+}
+
+li {
+  padding: 0;
+}
+
+legend {
+
+font-size: medium;
+}
+
+.mainCheck {
+  margin-left: 16px;
+  font-size: medium;
+} 
+
+.widgets {
+  background-color: rgb(173, 196, 239);
+  border: 1px solid cadetblue;
+  border-radius: 3px;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  display: flex;
+  height: 160px;
+  justify-content: space-between;
+}
+
+.left-widget {
+  border: 2px solid rgb(149, 243, 149);
+  padding: 5px;
+  background-color: #cff4fc;
+  width: 30%;
+  overflow-y: auto;
+  margin: 20px;
+}
+.middle-widget {
+  border: 2px solid rgb(149, 243, 149);
+  padding: 5px;
+  background-color: #cff4fc;
+  width: 30%;
+  overflow-y: auto;
+  margin: 20px;
+}
+.right-widget {
+  border: 2px solid rgb(149, 243, 149);
+  padding: 5px;
+  background-color: #cff4fc;
+  width: 30%;
+  overflow-y: auto;
+  margin: 20px;
+}
+.titles {
+ 
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  height: 30px;
+  justify-content: space-between;
+}
+.title {
+  text-align: center;
+  width: 150px;
+}
+/* .table {
+  counter-reset: rowNumber;
+}
+
+.table tbody tr {
+  counter-increment: rowNumber;
+}
+
+.table tr td:first-child::before {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+} */
+/* td {
+  border-bottom: 1px solid black;
+} */

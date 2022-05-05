@@ -90,7 +90,7 @@ const contentTab = (key) => {
                                 ${
                                 data[item].map(elem =>`
                                     <li class="list-group-item list-group-item-info" >
-                                        <input type="checkbox" id="chk${elem.id}-${item}-${key}">   
+                                        <input type="checkbox" id="chk${elem.id}-${item}-${key}" onclick="checkCopy('${elem.id}', '${item}', '${key}')">   
                                         ${elem.title}   ${elem.id}
                                     </li>
                                 `).join('')		
@@ -105,9 +105,12 @@ const contentTab = (key) => {
 }
 contentTab('top')
 contentTab('bottom')
-
-
-
+window.checkCopy = (id, item, key) => {
+    if (key == 'bottom') 
+        document.querySelector(`#chk${id}-${item}-top`).checked = document.querySelector(`#chk${id}-${item}-${key}`).checked
+    else
+        document.querySelector(`#chk${id}-${item}-bottom`).checked = document.querySelector(`#chk${id}-${item}-${key}`).checked
+}
 
 
 

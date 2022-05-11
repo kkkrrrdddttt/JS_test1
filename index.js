@@ -1,29 +1,9 @@
-
-let count = 30
-const dataArr = (side) => {
-    const arr = []
-    for (let i = 1; i <= count; i++) {
-        const elemArr =   {
-            id:     i-1,
-            title:  side
-        }
-        arr.push(elemArr) 
-    }
-    return arr
-}
-
-
-const dataJson = {
-		left: 			dataArr('Left'),
-        middle: 		dataArr('Middle'),
-        right: 			dataArr('Right')
-    }
-
-localStorage.setItem('data', JSON.stringify(dataJson))
-const data      = JSON.parse(localStorage.getItem('data')),
-    tabContent  = document.getElementsByClassName('tab-c')
-// localStorage.clear()
-
+import {createGridData} from './business.js'
+createGridData()
+const   count     = 30,
+        data      = JSON.parse(localStorage.getItem('data')),
+        tabContent = document.getElementsByClassName('tab-c')
+    //localStorage.clear()
 
 window.tabs = (event) => {
     const dataTab = event.target.getAttribute('data-tab')
@@ -53,7 +33,7 @@ const showTab = () => {
        }
     }
 }
-
+window.chckArr = []
 window.onhashchange = () => showTab()
 window.addEventListener('load', () => showTab())
 const checkBox = (item, key) => {
@@ -61,9 +41,9 @@ const checkBox = (item, key) => {
     const main  = document.getElementById('mainCheck' + '-' + item + '-' + key)
     for ( let i = 0; i < count; i++) {
          all.push(document.getElementById('chk' + i + '-' + item + '-' + key))
+         //all.push(document.getElementById('chk' + i + '-' + item + '-bottom'))
     }
     
-    console.log(all)
 
     for(let i = 0; i < all.length; i++) {  
         all[i].onclick = () => {
@@ -72,7 +52,11 @@ const checkBox = (item, key) => {
             main.indeterminate = allChecked > 0 && allChecked < all.length
         }
     }
-
+    
+    if (key == 'bottom') 
+        document.querySelector(`#mainCheck-${item}-top`).checked = main.checked
+    else
+        document.querySelector(`#mainCheck-${item}-bottom`).checked = main.checked
    
     for(let i = 0; i < all.length; i++) {
         all[i].checked = main.checked
@@ -99,18 +83,31 @@ const contentTab = (key) => {
                             </ol>
                             `
         document.querySelector('#' + item + '-' + key).append(template.content.cloneNode(true))
-        document.querySelector(`#mainCheck-${item}-${key}`).addEventListener('click', () => checkBox(item, key))
+       document.querySelector(`#mainCheck-${item}-${key}`).addEventListener('click', () => checkBox(item, key))
     })
     
 }
 contentTab('top')
 contentTab('bottom')
 window.checkCopy = (id, item, key) => {
+    let elem = document.querySelector(`#chk${id}-${item}-${key}`),
+        myIndex = chckArr.indexOf(`#chk${id}-${item}-top,#chk${id}-${item}-bottom`)
+       
     if (key == 'bottom') 
-        document.querySelector(`#chk${id}-${item}-top`).checked = document.querySelector(`#chk${id}-${item}-${key}`).checked
+        document.querySelector(`#chk${id}-${item}-top`).checked = elem.checked
     else
-        document.querySelector(`#chk${id}-${item}-bottom`).checked = document.querySelector(`#chk${id}-${item}-${key}`).checked
-}
+        document.querySelector(`#chk${id}-${item}-bottom`).checked = elem.checked
+
+    if (elem.checked) 
+        chckArr.push(`#chk${id}-${item}-top,#chk${id}-${item}-bottom`)
+    else 
+        if (myIndex !== -1) {
+            chckArr.splice(myIndex, 1);
+        }
+   
+    localStorage.setItem('checkBoxArray', chckArr)
+
+ }
 
 
 

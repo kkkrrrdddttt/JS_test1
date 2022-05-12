@@ -129,22 +129,6 @@ font-size: medium;
   justify-content: space-between;
 }
 .title {
+  width: 30%;
   text-align: center;
-  width: 150px;
 }
-/* .table {
-  counter-reset: rowNumber;
-}
-
-.table tbody tr {
-  counter-increment: rowNumber;
-}
-
-.table tr td:first-child::before {
-  content: counter(rowNumber);
-  min-width: 1em;
-  margin-right: 0.5em;
-} */
-/* td {
-  border-bottom: 1px solid black;
-} */

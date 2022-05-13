@@ -21,6 +21,7 @@ const createGridData = () => {
         }
 
     localStorage.setItem('data', JSON.stringify(dataJson))
+    return dataJson
 }
 
 export  {createGridData}

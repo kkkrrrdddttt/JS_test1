@@ -1,9 +1,6 @@
 import {createGridData} from './business.js'
-createGridData()
-const   count     = 30,
-        data      = JSON.parse(localStorage.getItem('data')),
+const   data      = createGridData(),
         tabContent = document.getElementsByClassName('tab-c')
-    //localStorage.clear()
 
 window.tabs = (event) => {
     const dataTab = event.target.getAttribute('data-tab')
@@ -36,30 +33,42 @@ const showTab = () => {
 window.chckArr = []
 window.onhashchange = () => showTab()
 window.addEventListener('load', () => showTab())
-const checkBox = (item, key) => {
-    let  all = []
+window.checkBox = (item, key) => {
+    let  all = [],
+        allTop = [],
+        allBottom = [],
+        count = document.querySelectorAll(`.chk-${item}-${key}`).length
     const main  = document.getElementById('mainCheck' + '-' + item + '-' + key)
     for ( let i = 0; i < count; i++) {
          all.push(document.getElementById('chk' + i + '-' + item + '-' + key))
-         //all.push(document.getElementById('chk' + i + '-' + item + '-bottom'))
+         allTop.push(document.getElementById('chk' + i + '-' + item + '-top'))
+         allBottom.push(document.getElementById('chk' + i + '-' + item + '-bottom'))
     }
     
-
     for(let i = 0; i < all.length; i++) {  
         all[i].onclick = () => {
-            let allChecked = document.querySelectorAll('#group > [type="checkbox"]:checked').length
-            main.checked = allChecked == all.length
-            main.indeterminate = allChecked > 0 && allChecked < all.length
+            let allChecked = document.querySelectorAll(`.chk-${item}-${key}:checked`).length,
+                elem = document.getElementById('chk' + i + '-' + item + '-' + key)
+            document.querySelector(`#mainCheck-${item}-top`).checked = allChecked == all.length
+            document.querySelector(`#mainCheck-${item}-bottom`).checked = allChecked == all.length
+            document.querySelector(`#mainCheck-${item}-top`).indeterminate = allChecked > 0 && allChecked < all.length
+            document.querySelector(`#mainCheck-${item}-bottom`).indeterminate = allChecked > 0 && allChecked < all.length
+            document.getElementById('chk' + i + '-' + item + '-top').checked = elem.checked
+            document.getElementById('chk' + i + '-' + item + '-bottom').checked = elem.checked
+                    
         }
+
     }
-    
-    if (key == 'bottom') 
-        document.querySelector(`#mainCheck-${item}-top`).checked = main.checked
-    else
-        document.querySelector(`#mainCheck-${item}-bottom`).checked = main.checked
-   
+
+            document.querySelector(`#mainCheck-${item}-top`).checked = main.checked
+            document.querySelector(`#mainCheck-${item}-bottom`).checked = main.checked
+            document.querySelector(`#mainCheck-${item}-top`).indeterminate = main.indeterminate
+            document.querySelector(`#mainCheck-${item}-bottom`).indeterminate = main.indeterminate
+  
     for(let i = 0; i < all.length; i++) {
         all[i].checked = main.checked
+        allTop[i].checked = main.checked 
+        allBottom[i].checked = main.checked  
     }
     
 }
@@ -70,11 +79,11 @@ const contentTab = (key) => {
         template.innerHTML = `
                             <ol class="list-group list-group-flush">
                             <fieldset id="group">
-                                <legend><input class="mainCheck" id="mainCheck-${item}-${key}" type="checkbox">Check all</legend>
+                                <legend><input class="mainCheck" id="mainCheck-${item}-${key}" type="checkbox" onclick="checkBox('${item}', '${key}')">Check all</legend>
                                 ${
                                 data[item].map(elem =>`
                                     <li class="list-group-item list-group-item-info" >
-                                        <input type="checkbox" id="chk${elem.id}-${item}-${key}" onclick="checkCopy('${elem.id}', '${item}', '${key}')">   
+                                        <input type="checkbox" class="chk-${item}-${key}" id="chk${elem.id}-${item}-${key}" onclick="checkBox('${item}', '${key}')">   
                                         ${elem.title}   ${elem.id}
                                     </li>
                                 `).join('')		
@@ -83,36 +92,8 @@ const contentTab = (key) => {
                             </ol>
                             `
         document.querySelector('#' + item + '-' + key).append(template.content.cloneNode(true))
-       document.querySelector(`#mainCheck-${item}-${key}`).addEventListener('click', () => checkBox(item, key))
     })
     
 }
 contentTab('top')
 contentTab('bottom')
-window.checkCopy = (id, item, key) => {
-    let elem = document.querySelector(`#chk${id}-${item}-${key}`),
-        myIndex = chckArr.indexOf(`#chk${id}-${item}-top,#chk${id}-${item}-bottom`)
-       
-    if (key == 'bottom') 
-        document.querySelector(`#chk${id}-${item}-top`).checked = elem.checked
-    else
-        document.querySelector(`#chk${id}-${item}-bottom`).checked = elem.checked
-
-    if (elem.checked) 
-        chckArr.push(`#chk${id}-${item}-top,#chk${id}-${item}-bottom`)
-    else 
-        if (myIndex !== -1) {
-            chckArr.splice(myIndex, 1);
-        }
-   
-    localStorage.setItem('checkBoxArray', chckArr)
-
- }
-
-
-
-
-
-
-
-
